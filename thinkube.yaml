@@ -12,14 +12,6 @@ spec:
       health: /api/health
       test:
         enabled: false
-      environment:
-        - name: SEAWEEDFS_ENDPOINT
-          value: "{{ seaweedfs_endpoint }}"
-        - name: SEAWEEDFS_ACCESS_KEY
-          value: "{{ seaweedfs_access_key }}"
-        - name: SEAWEEDFS_SECRET_KEY
-          value: "{{ seaweedfs_password }}"
-
   routes:
     - path: /
       to: seaweedfs-gateway
