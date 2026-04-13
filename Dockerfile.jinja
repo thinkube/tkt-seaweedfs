@@ -1,0 +1,38 @@
+# Stage 1: Build React frontend
+FROM node:20-slim AS frontend-builder
+
+WORKDIR /build/frontend
+
+COPY frontend/package.json frontend/package-lock.json* ./
+RUN npm ci
+
+COPY frontend/ ./
+RUN npm run build
+
+# Stage 2: Python runtime with FastAPI + built frontend
+FROM python:3.12-slim
+
+WORKDIR /app
+
+# Install Python dependencies
+COPY requirements.txt /app/requirements.txt
+RUN pip install --no-cache-dir -r /app/requirements.txt
+
+# Copy backend application
+COPY server.py /app/server.py
+COPY profiles.json /app/profiles.json
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+
+# Copy built React frontend to static directory
+COPY --from=frontend-builder /build/frontend/dist /app/static
+
+# Non-root user for runtime
+RUN useradd -m -u 1000 gateway
+USER gateway
+
+ENV PYTHONUNBUFFERED=1
+
+EXPOSE 8080
+
+ENTRYPOINT ["/app/entrypoint.sh"]

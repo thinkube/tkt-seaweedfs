@@ -1,0 +1,11 @@
+apiVersion: thinkube.io/v1
+kind: TemplateManifest
+metadata:
+  name: tkt-seaweedfs
+  title: "SeaweedFS File Gateway — Object Storage with Upload UI"
+  description: Shared file gateway service providing REST API and URL-parameterized React upload UI for SeaweedFS object storage. Single credential holder, single migration point. Upload profiles define per-workflow forms (file count, metadata fields, accepted types).
+  version: 1.0.0
+  author: Alejandro Martínez Corriá
+  tags: ["storage", "object-store", "s3", "file-upload", "seaweedfs"]
+
+parameters: []

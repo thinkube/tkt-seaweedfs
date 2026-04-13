@@ -1,0 +1,147 @@
+@import "tailwindcss";
+
+/* Import Google Fonts via @fontsource for self-hosting */
+@import "@fontsource/poppins/300.css";
+@import "@fontsource/poppins/400.css";
+@import "@fontsource/poppins/500.css";
+@import "@fontsource/poppins/600.css";
+@import "@fontsource/poppins/700.css";
+@import "@fontsource/noto-sans-mono/400.css";
+@import "@fontsource/noto-sans-mono/500.css";
+
+@variant dark (.dark &);
+
+/* Thinkube design tokens — matches thinkube-style/app/globals.css */
+:root {
+  --font-poppins: "Poppins", system-ui, -apple-system, sans-serif;
+  --font-noto-sans-mono: "Noto Sans Mono", "Courier New", monospace;
+
+  --background: oklch(99% 0.005 75);
+  --foreground: oklch(20% 0 0);
+  --card: oklch(100% 0 0);
+  --card-foreground: oklch(20% 0 0);
+  --popover: oklch(100% 0 0);
+  --popover-foreground: oklch(20% 0 0);
+  --primary: oklch(38% 0.15 220);
+  --primary-foreground: oklch(100% 0 0);
+  --secondary: oklch(96% 0.005 220);
+  --secondary-foreground: oklch(20% 0 0);
+  --muted: oklch(96% 0.005 220);
+  --muted-foreground: oklch(50% 0 0);
+  --accent: oklch(65% 0.10 75);
+  --accent-foreground: oklch(20% 0 0);
+  --destructive: oklch(55% 0.15 25);
+  --destructive-foreground: oklch(100% 0 0);
+  --border: oklch(90% 0.005 220);
+  --input: oklch(90% 0.005 220);
+  --ring: oklch(42% 0.12 220);
+  --radius: 0rem;
+
+  --success: oklch(50% 0.12 145);
+  --success-foreground: oklch(98% 0 0);
+  --warning: oklch(65% 0.12 80);
+  --warning-foreground: oklch(20% 0 0);
+  --info: oklch(55% 0.10 240);
+  --info-foreground: oklch(98% 0 0);
+}
+
+.dark {
+  --background: oklch(24% 0.06 220);
+  --foreground: oklch(98% 0 0);
+  --card: oklch(26% 0.06 220);
+  --card-foreground: oklch(98% 0 0);
+  --popover: oklch(26% 0.06 220);
+  --popover-foreground: oklch(98% 0 0);
+  --primary: oklch(60% 0.13 220);
+  --primary-foreground: oklch(100% 0 0);
+  --secondary: oklch(38% 0.07 220);
+  --secondary-foreground: oklch(98% 0 0);
+  --muted: oklch(38% 0.07 220);
+  --muted-foreground: oklch(88% 0 0);
+  --accent: oklch(72% 0.12 70);
+  --accent-foreground: oklch(20% 0 0);
+  --destructive: oklch(68% 0.17 25);
+  --destructive-foreground: oklch(100% 0 0);
+  --border: oklch(52% 0.10 220);
+  --input: oklch(38% 0.07 220);
+  --ring: oklch(60% 0.13 220);
+
+  --hover: oklch(50% 0.11 220);
+  --hover-foreground: oklch(100% 0 0);
+
+  --success: oklch(68% 0.14 145);
+  --success-foreground: oklch(100% 0 0);
+  --warning: oklch(78% 0.14 75);
+  --warning-foreground: oklch(15% 0 0);
+  --info: oklch(70% 0.12 240);
+  --info-foreground: oklch(100% 0 0);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-hover: var(--hover);
+  --color-hover-foreground: var(--hover-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+
+  --default-font-family: var(--font-poppins), system-ui, -apple-system, sans-serif;
+  --default-transition-duration: 150ms;
+
+  --radius-sm: 0rem;
+  --radius-md: 0rem;
+  --radius-lg: var(--radius);
+  --radius-xl: 0rem;
+  --radius-2xl: 0rem;
+}
+
+@source "../node_modules/thinkube-style/dist/**/*.js";
+
+* {
+  border-color: var(--color-border);
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-poppins), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code, pre {
+  font-family: var(--font-noto-sans-mono), monospace;
+}
+
+button,
+[role="button"],
+label,
+nav,
+th,
+thead,
+select,
+[role="combobox"] {
+  font-family: var(--font-poppins), system-ui, -apple-system, sans-serif;
+  font-weight: 500;
+}
