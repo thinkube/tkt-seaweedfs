@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { TkThemeToggle } from "thinkube-style/components/theme";
 import { TkCard, TkCardHeader, TkCardTitle, TkCardDescription, TkCardContent } from "thinkube-style/components/cards-data";
 import { TkButton } from "thinkube-style/components/buttons-badges";
-import { Upload, FolderOpen, HardDrive } from "lucide-react";
+import { FolderOpen, HardDrive } from "lucide-react";
 import { UploadForm } from "./UploadForm";
 import { FileList } from "./FileList";
 import { fetchProfiles, type UploadProfile } from "./api";
@@ -19,12 +19,6 @@ function NavBar() {
           SeaweedFS Gateway
         </Link>
         <nav className="ml-auto flex items-center gap-2">
-          <Link to="/">
-            <TkButton variant={location.pathname === "/" ? "default" : "ghost"} size="sm">
-              <Upload className="mr-1.5 h-4 w-4" />
-              Upload
-            </TkButton>
-          </Link>
           <Link to="/browse">
             <TkButton variant={location.pathname === "/browse" ? "default" : "ghost"} size="sm">
               <FolderOpen className="mr-1.5 h-4 w-4" />
