@@ -27,7 +27,7 @@ RUN chmod +x /app/entrypoint.sh
 COPY --from=frontend-builder /build/frontend/dist /app/static
 
 # Non-root user for runtime
-RUN useradd -m -u 1000 gateway
+RUN useradd -m -u 1001 gateway
 USER gateway
 
 ENV PYTHONUNBUFFERED=1
