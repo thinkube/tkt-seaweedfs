@@ -31,27 +31,6 @@ class TestHealth:
         assert data["status"] == "healthy"
 
 
-class TestProfiles:
-    def test_list_profiles(self, client: httpx.Client):
-        resp = client.get("/api/profiles")
-        assert resp.status_code == 200
-        profiles = resp.json()
-        assert "aligner" in profiles
-        assert "texplitter" in profiles
-        assert "generic" in profiles
-
-    def test_get_single_profile(self, client: httpx.Client):
-        resp = client.get("/api/profiles/aligner")
-        assert resp.status_code == 200
-        profile = resp.json()
-        assert profile["title"] == "Bilingual Document Alignment"
-        assert len(profile["files"]) == 2
-
-    def test_get_nonexistent_profile(self, client: httpx.Client):
-        resp = client.get("/api/profiles/nonexistent")
-        assert resp.status_code == 404
-
-
 class TestRoundTrip:
     """Full upload → list → download → delete cycle."""
 

@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useParams, useSearchParams, Link } from "react-router-dom";
+import { useMemo, useState } from "react";
+import { useSearchParams, Link } from "react-router-dom";
 import { TkCard, TkCardHeader, TkCardTitle, TkCardDescription, TkCardContent, TkCardFooter } from "thinkube-style/components/cards-data";
 import { TkButton } from "thinkube-style/components/buttons-badges";
 import { TkInput, TkLabel } from "thinkube-style/components/forms-inputs";
@@ -8,13 +8,13 @@ import { TkSelect, TkSelectTrigger, TkSelectValue, TkSelectContent, TkSelectItem
 import { TkSuccessAlert, TkErrorAlert } from "thinkube-style/components/feedback";
 import { TkProgress } from "thinkube-style/components/feedback";
 import { Upload, ArrowLeft } from "lucide-react";
-import { fetchProfile, uploadFiles, type UploadProfile, type UploadResult } from "./api";
+import { parseProfileFromParams, uploadFiles, type UploadResult } from "./api";
 
 export function UploadForm() {
-  const { profileName } = useParams<{ profileName: string }>();
   const [searchParams] = useSearchParams();
 
-  const [profile, setProfile] = useState<UploadProfile | null>(null);
+  const profile = useMemo(() => parseProfileFromParams(searchParams), [searchParams]);
+
   const [error, setError] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
   const [result, setResult] = useState<UploadResult | null>(null);
@@ -22,29 +22,22 @@ export function UploadForm() {
 
   // Form state
   const [selectedFiles, setSelectedFiles] = useState<Record<string, File[]>>({});
-  const [metadata, setMetadata] = useState<Record<string, string>>({});
-  const [tenant, setTenant] = useState("default");
-
-  useEffect(() => {
-    if (!profileName) return;
-    fetchProfile(profileName)
-      .then((p) => {
-        setProfile(p);
-        // Pre-fill metadata from URL query params
-        const prefilled: Record<string, string> = {};
-        for (const m of p.metadata) {
-          const val = searchParams.get(m.name);
-          if (val) prefilled[m.name] = val;
-        }
-        setMetadata(prefilled);
-      })
-      .catch((e) => setError(e.message));
-  }, [profileName, searchParams]);
+  const [metadata, setMetadata] = useState<Record<string, string>>(() => {
+    // Pre-fill metadata from additional URL params not part of profile encoding
+    const prefilled: Record<string, string> = {};
+    if (profile) {
+      for (const m of profile.metadata) {
+        const val = searchParams.get(m.name);
+        if (val) prefilled[m.name] = val;
+      }
+    }
+    return prefilled;
+  });
+  const [tenant, setTenant] = useState(searchParams.get("tenant") ?? "default");
 
   const handleSubmit = async () => {
     if (!profile) return;
 
-    // Collect all files
     const allFiles: File[] = [];
     for (const field of profile.files) {
       const files = selectedFiles[field.name] ?? [];
@@ -61,7 +54,9 @@ export function UploadForm() {
     setProgress(20);
 
     try {
-      const keyPrefix = profile.destination.replace("{doc_id}", "").replace("{prefix}", metadata["prefix"] ?? "");
+      const keyPrefix = profile.destination
+        .replace("{doc_id}", "")
+        .replace("{prefix}", metadata["prefix"] ?? "");
       setProgress(50);
       const uploadResult = await uploadFiles(allFiles, tenant, keyPrefix);
       setProgress(100);
@@ -74,18 +69,16 @@ export function UploadForm() {
     }
   };
 
-  if (error && !profile) {
-    return (
-      <div className="mx-auto max-w-2xl p-6">
-        <TkErrorAlert title="Error">{error}</TkErrorAlert>
-      </div>
-    );
-  }
-
   if (!profile) {
     return (
       <div className="mx-auto max-w-2xl p-6">
-        <p className="text-muted-foreground">Loading profile...</p>
+        <TkErrorAlert title="Invalid profile">
+          Missing or invalid profile parameters. A <code>title</code> and at least one <code>file</code> parameter are required.
+        </TkErrorAlert>
+        <Link to="/" className="mt-4 inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
+          <ArrowLeft className="h-4 w-4" />
+          Back to samples
+        </Link>
       </div>
     );
   }
@@ -94,13 +87,15 @@ export function UploadForm() {
     <div className="mx-auto max-w-2xl p-6">
       <Link to="/" className="mb-4 inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
         <ArrowLeft className="h-4 w-4" />
-        Back to profiles
+        Back to samples
       </Link>
 
       <TkCard>
         <TkCardHeader>
           <TkCardTitle>{profile.title}</TkCardTitle>
-          <TkCardDescription>{profile.description}</TkCardDescription>
+          {profile.description && (
+            <TkCardDescription>{profile.description}</TkCardDescription>
+          )}
         </TkCardHeader>
         <TkCardContent className="space-y-6">
           {/* Tenant */}
