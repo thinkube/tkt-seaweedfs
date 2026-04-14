@@ -4,6 +4,9 @@ metadata:
   name: "{{ project_name }}"
 
 spec:
+  deployment:
+    type: app
+
   containers:
     - name: seaweedfs-gateway
       build: .
@@ -12,6 +15,7 @@ spec:
       health: /api/health
       test:
         enabled: false
+
   routes:
     - path: /
       to: seaweedfs-gateway
