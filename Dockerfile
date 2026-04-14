@@ -1,5 +1,7 @@
+ARG CONTAINER_REGISTRY
+
 # Stage 1: Build React frontend
-FROM {{ container_registry }}/library/node-base:22-alpine AS frontend-builder
+FROM ${CONTAINER_REGISTRY}/library/node-base:22-alpine AS frontend-builder
 
 WORKDIR /build/frontend
 
@@ -10,7 +12,7 @@ COPY frontend/ ./
 RUN npm run build
 
 # Stage 2: Python runtime with FastAPI + built frontend
-FROM {{ container_registry }}/library/python-base:3.12-slim
+FROM ${CONTAINER_REGISTRY}/library/python-base:3.12-slim
 
 WORKDIR /app
 
