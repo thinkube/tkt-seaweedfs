@@ -33,7 +33,10 @@ def get_s3_client():
         endpoint_url=SEAWEEDFS_ENDPOINT,
         aws_access_key_id=SEAWEEDFS_ACCESS_KEY,
         aws_secret_access_key=SEAWEEDFS_SECRET_KEY,
-        config=BotoConfig(signature_version="s3v4"),
+        config=BotoConfig(
+            signature_version="s3v4",
+            request_checksum_calculation="when_required",
+        ),
         region_name="us-east-1",
     )
 
