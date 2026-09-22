@@ -1,3 +1,8 @@
+/*
+ * Copyright Alejandro Martínez Corriá and the Thinkube contributors
+ * SPDX-License-Identifier: MIT
+ */
+
 import { useMemo, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import { TkCard, TkCardHeader, TkCardTitle, TkCardDescription, TkCardContent, TkCardFooter } from "thinkube-style/components/cards-data";

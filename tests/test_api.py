@@ -1,3 +1,6 @@
+# Copyright Alejandro Martínez Corriá and the Thinkube contributors
+# SPDX-License-Identifier: MIT
+
 """API endpoint tests for tkt-seaweedfs gateway.
 
 Run against a live instance:

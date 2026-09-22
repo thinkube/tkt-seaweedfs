@@ -1,3 +1,6 @@
+# Copyright Alejandro Martínez Corriá and the Thinkube contributors
+# SPDX-License-Identifier: MIT
+
 ARG CONTAINER_REGISTRY
 
 # Stage 1: Build React frontend

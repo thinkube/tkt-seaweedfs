@@ -1,3 +1,8 @@
+/*
+ * Copyright Alejandro Martínez Corriá and the Thinkube contributors
+ * SPDX-License-Identifier: MIT
+ */
+
 /** HTTP client for the SeaweedFS gateway backend. */
 
 // ---------------------------------------------------------------------------

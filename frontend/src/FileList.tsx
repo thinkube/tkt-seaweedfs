@@ -1,3 +1,8 @@
+/*
+ * Copyright Alejandro Martínez Corriá and the Thinkube contributors
+ * SPDX-License-Identifier: MIT
+ */
+
 import { useState } from "react";
 import { TkCard, TkCardHeader, TkCardTitle, TkCardContent } from "thinkube-style/components/cards-data";
 import { TkButton } from "thinkube-style/components/buttons-badges";

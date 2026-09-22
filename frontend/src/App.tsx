@@ -1,3 +1,8 @@
+/*
+ * Copyright Alejandro Martínez Corriá and the Thinkube contributors
+ * SPDX-License-Identifier: MIT
+ */
+
 import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
 import { TkThemeToggle } from "thinkube-style/components/theme";
 import { TkCard, TkCardHeader, TkCardTitle, TkCardDescription, TkCardContent } from "thinkube-style/components/cards-data";
