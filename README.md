@@ -41,7 +41,7 @@ over MCP. It talks to the core `seaweedfs` component, which the Thinkube
 installer installs. It is not installed on its own.
 
 The walkthrough is on the documentation site, under Playbooks:
-[Store and fetch files with the file gateway](https://github.com/thinkube/thinkube.org/blob/main/modules/ROOT/pages/playbooks/store-and-fetch-files.adoc).
+[Store and fetch files with the file gateway](https://thinkube.github.io/thinkube.org/thinkube-docs/playbooks/store-and-fetch-files.html).
 
 ## What is here
 
