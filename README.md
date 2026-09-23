@@ -12,8 +12,8 @@ behind it changes.
 
 - **Storage.** The backend talks S3 to the core SeaweedFS component. The
   platform gives it `SEAWEEDFS_ENDPOINT`, `SEAWEEDFS_ACCESS_KEY` and
-  `SEAWEEDFS_SECRET_KEY`; without an endpoint it uses
-  `http://seaweedfs-s3.seaweedfs.svc.cluster.local:8333` (`server.py:24`).
+  `SEAWEEDFS_SECRET_KEY` when it deploys the app. The server stops at start
+  if one of them is not set.
 - **Tenants.** Each tenant has its own bucket, `tenant-<tenant>`.
 - **REST API:**
 

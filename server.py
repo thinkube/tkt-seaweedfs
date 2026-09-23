@@ -21,9 +21,19 @@ from fastapi.staticfiles import StaticFiles
 # Configuration
 # ---------------------------------------------------------------------------
 
-SEAWEEDFS_ENDPOINT = os.environ.get("SEAWEEDFS_ENDPOINT", "http://seaweedfs-s3.seaweedfs.svc.cluster.local:8333")
-SEAWEEDFS_ACCESS_KEY = os.environ.get("SEAWEEDFS_ACCESS_KEY", "")
-SEAWEEDFS_SECRET_KEY = os.environ.get("SEAWEEDFS_SECRET_KEY", "")
+
+
+def required_env(name: str) -> str:
+    """A setting Thinkube gives every app from its storage Secret; the app stops without it."""
+    value = os.environ.get(name)
+    if not value:
+        raise SystemExit(f"{name} is not set. Thinkube sets it when it deploys the app.")
+    return value
+
+
+SEAWEEDFS_ENDPOINT = required_env("SEAWEEDFS_ENDPOINT")
+SEAWEEDFS_ACCESS_KEY = required_env("SEAWEEDFS_ACCESS_KEY")
+SEAWEEDFS_SECRET_KEY = required_env("SEAWEEDFS_SECRET_KEY")
 
 # ---------------------------------------------------------------------------
 # S3 client
