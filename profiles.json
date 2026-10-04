@@ -1,0 +1,35 @@
+{
+  "aligner": {
+    "title": "Bilingual Document Alignment",
+    "description": "Upload source and target documents for alignment",
+    "files": [
+      {"name": "source", "label": "Source document", "accept": ".txt,.html,.xml", "required": true},
+      {"name": "target", "label": "Target document", "accept": ".txt,.html,.xml", "required": true}
+    ],
+    "metadata": [
+      {"name": "source_lang", "label": "Source language", "type": "select", "options": ["en", "es", "fr", "de"]},
+      {"name": "target_lang", "label": "Target language", "type": "select", "options": ["en", "es", "fr", "de"]}
+    ],
+    "destination": "documents/{doc_id}/source/"
+  },
+  "texplitter": {
+    "title": "Document Splitting",
+    "description": "Upload a document for markup-aware splitting",
+    "files": [
+      {"name": "document", "label": "Document to split", "accept": ".html,.xml,.xliff,.dita", "required": true}
+    ],
+    "metadata": [],
+    "destination": "documents/{doc_id}/source/"
+  },
+  "generic": {
+    "title": "File Upload",
+    "description": "Upload files to object storage",
+    "files": [
+      {"name": "files", "label": "Files", "accept": "*", "required": true, "multiple": true}
+    ],
+    "metadata": [
+      {"name": "prefix", "label": "Storage prefix", "type": "text"}
+    ],
+    "destination": "{prefix}/"
+  }
+}

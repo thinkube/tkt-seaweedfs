@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.env
+frontend/node_modules/
+frontend/dist/
+.vite/
+
+# Local Claude Code and Tandem state
+.claude/
+.tandem/

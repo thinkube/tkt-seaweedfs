@@ -1,0 +1,42 @@
+# Copyright Alejandro Martínez Corriá and the Thinkube contributors
+# SPDX-License-Identifier: MIT
+
+ARG CONTAINER_REGISTRY
+
+# Stage 1: Build React frontend
+FROM ${CONTAINER_REGISTRY}/library/node-base:22-alpine AS frontend-builder
+
+WORKDIR /build/frontend
+
+COPY frontend/package.json frontend/package-lock.json* ./
+RUN npm ci
+
+COPY frontend/ ./
+RUN npm run build
+
+# Stage 2: Python runtime with FastAPI + built frontend
+FROM ${CONTAINER_REGISTRY}/library/python-base:3.12-slim
+
+WORKDIR /app
+
+# Install Python dependencies
+COPY requirements.txt /app/requirements.txt
+RUN pip install --no-cache-dir -r /app/requirements.txt
+
+# Copy backend application
+COPY server.py /app/server.py
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+
+# Copy built React frontend to static directory
+COPY --from=frontend-builder /build/frontend/dist /app/static
+
+# Non-root user for runtime
+RUN useradd -m -u 1001 gateway
+USER gateway
+
+ENV PYTHONUNBUFFERED=1
+
+EXPOSE 8080
+
+ENTRYPOINT ["/app/entrypoint.sh"]
